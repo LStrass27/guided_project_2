@@ -1,2 +1,2 @@
-# guided-project-1
-Guided Project 1 EDP LA
+# guided-project-2
+Guided Project 2 EDP LA
