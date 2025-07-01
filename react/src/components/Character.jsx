@@ -26,6 +26,7 @@ const Character = () => {
 
         try {
             const response = await fetch(import.meta.env.VITE_CHARACTERS_URL + '/' + String(id) + "/films");
+            console.log(response);      
             if (!response.ok) {
                 throw new Error('films could not be fetched!');
             }
@@ -55,6 +56,7 @@ const Character = () => {
             navigate(`/film/${filmId}`);
         }
     };
+
 
     return (
         <div>

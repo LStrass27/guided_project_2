@@ -75,7 +75,6 @@ app.get('/api/films', async (req, res) => {
 app.get('/api/characters/:id', async (req, res) => {
     try {   
         const characterId = parseInt(req.params.id, 10);
-        console.log(characterId);
 
         const client = await MongoClient.connect(url);
         const db = client.db(dbName);
@@ -95,9 +94,8 @@ app.get('/api/characters/:id', async (req, res) => {
 // GET Route Handler to get planets/:id
 app.get('/api/planets/:id', async (req, res) => {
     try {   
-        console.log(req.params);
+  
         const planetId = parseInt(req.params.id, 10);
-        console.log(typeof(planetId));
 
         const client = await MongoClient.connect(url);
         const db = client.db(dbName);
@@ -118,9 +116,9 @@ app.get('/api/planets/:id', async (req, res) => {
 // GET Route Handler to get films/:id
 app.get('/api/films/:id', async (req, res) => {
     try {   
-        console.log(req.params);
+      
         const filmId = parseInt(req.params.id, 10);
-        console.log(typeof(filmId));
+     
 
         const client = await MongoClient.connect(url);
         const db = client.db(dbName);
@@ -191,8 +189,10 @@ app.get('/api/films/:id/planets', async (req, res) => {
 
 //GET Route handle to get all films a character is in 
 app.get('/api/characters/:id/films', async (req, res) => {
+
     try {   
         const charId = parseInt(req.params.id, 10);
+        console.log(charId);
 
         const client = await MongoClient.connect(url);
         const db = client.db(dbName);
@@ -206,7 +206,7 @@ app.get('/api/characters/:id/films', async (req, res) => {
         const filmIds = data.map(f => f.film_id);
         const filmsCollection = db.collection(process.env.MONGO_DB_COLLECTION_FILMS);
         const films = await filmsCollection.find({ id: { $in: filmIds } }).toArray();
-
+        // console.log("HERE",films);
         res.json(films);
     } catch (err) {
         console.error("Error:", err);

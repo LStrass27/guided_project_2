@@ -1,7 +1,8 @@
 import React from 'react';
 
 const MapFilms = ({ data, onClick }) => {
-    console.log(data)
+    console.log("IN MAP FILMS");
+    
 
     // Remove duplicates based on film.id
     const uniqueFilms = data ? Array.from(new Set(data.map(film => film.id)))
@@ -12,7 +13,7 @@ const MapFilms = ({ data, onClick }) => {
             {uniqueFilms.length > 0 ? (
                 uniqueFilms.map((film) => (
                     <div key={film.id} onClick={() => onClick(film.id)} style={{ cursor: 'pointer' }}>
-                        {film.id}
+                        {film.title}
                     </div>
                 ))
             ) : (

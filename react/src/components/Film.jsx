@@ -28,7 +28,7 @@ const Film = ({onClick }) => {
             }
 
             try {
-                const response = await fetch(import.meta.env.VITE_PLANETS_URL + '/' + String(id) + "/characters");
+                const response = await fetch(import.meta.env.VITE_FILMS_URL + '/' + String(id) + "/characters");
                 if (!response.ok) {
                     throw new Error('Characters could not be fetched!');
                 }

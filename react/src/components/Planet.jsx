@@ -60,10 +60,12 @@ const Planet = () => {
     };
 
     const handleFilmClick = (filmId) => {
-        if (data && filmData) {
+        if (filmId) {
             navigate(`/film/${filmId}`);
         }
     };
+
+    console.log("FILM DATA", filmData);
 
     return (
         <div>
