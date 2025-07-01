@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Homeworld from "./homeworld";
-import MapChars from './MapChars';
+import MapFilms from './MapFilms';
 
 
 const Character = () => {
@@ -52,7 +52,7 @@ const Character = () => {
 
     const handleFilmClick = () => {
         if (data && data.films) {
-            navigate(`/films/${data.film}`);
+            navigate(`/film/${data.id}`);
         }
     };
 
@@ -74,7 +74,7 @@ const Character = () => {
                 <h3>Films appeared: </h3>
                 {
                     filmsData.length > 0 ? (
-                        <MapChars data={filmsData} onClick={handlePlanetClick} />
+                        <MapFilms data={filmsData} onClick={handleFilmClick} />
                     ) : (
                         'Film data loading'
                     )

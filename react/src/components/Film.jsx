@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import Name from './components/Name';
 import MapChars from './MapChars';
 
 const Film = ({ fId, onClick }) => {
