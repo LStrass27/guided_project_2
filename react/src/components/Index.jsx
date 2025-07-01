@@ -3,7 +3,6 @@ import Name from "./Name";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
 const Index = (props) => {
     //const [username, setUsername] = useState('');
     const navigate = useNavigate();
