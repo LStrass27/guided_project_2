@@ -11,8 +11,8 @@ const MapFilms = ({ data, onClick }) => {
         <div>
             {uniqueFilms.length > 0 ? (
                 uniqueFilms.map((film) => (
-                    <div key={film.film_id} onClick={() => onClick(film.film_id)} style={{ cursor: 'pointer' }}>
-                        {film.film_id}
+                    <div key={film.id} onClick={() => onClick(film.id)} style={{ cursor: 'pointer' }}>
+                        {film.id}
                     </div>
                 ))
             ) : (
