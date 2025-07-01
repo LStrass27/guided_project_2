@@ -1,32 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 
 const Homeworld = ({ hId, onClick }) => {
     const [data, setData] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
-        try {
-            const response = await fetch(import.meta.env.VITE_PLANETS_URL + '/' + String(hId));
-            console.log(import.meta.env.VITE_PLANETS_URL + '/' + String(hId))
-            if (!response.ok) {
-                throw new Error('Data could not be fetched!');
+            try {
+                console.log("Fetching data for Homeworld with hId:", hId);
+                const url = import.meta.env.VITE_PLANETS_URL + '/' + String(hId);
+                console.log("Fetch URL:", url);
+                const response = await fetch(url);
+                console.log("Fetch response:", response);
+                if (!response.ok) {
+                    throw new Error('Data could not be fetched!');
+                }
+                const json_response = await response.json();
+                console.log("JSON response:", json_response);
+                setData(json_response[0]);
+                console.log("Data set:", json_response[0]);
+            } catch (error) {
+                console.error('Error fetching data:', error);
             }
-            const json_response = await response.json();
-            setData(json_response[0]);
-            console.log(data);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
         };
 
         fetchData();
     }, [hId]);
 
+    console.log("Current data state:", data);
+
     return (
-        <div onClick={() => onClick(data.id)} style={{ cursor: 'pointer' }}>
-            {data.name ? data.name : "Loading homeworld"}
+        <div onClick={() => onClick && onClick(data ? data.id : null)} style={{ cursor: 'pointer' }}>
+            {data && data.name ? data.name : "Loading homeworld"}
         </div>
     );
 };

@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import Homeworld from "./homeworld";
 
-const Character = () => {
+const Planet = () => {
     const { id } = useParams(); 
     const [data, setData] = useState([null]);
 
     useEffect(() => {
         const fetchData = async () => {
         try {
-            const response = await fetch(import.meta.env.VITE_CHARACTERS_URL + '/' + String(id));
+            const response = await fetch(import.meta.env.VITE_PLANETS_URL + '/' + String(id));
             if (!response.ok) {
                 throw new Error('Data could not be fetched!');
             }
@@ -36,14 +35,9 @@ const Character = () => {
     return (
         <div>
             <h1>{data.name}</h1>
-            <section id="generalInfo">
-                <p>Height: {data.height} cm</p>
-                <p>Mass: {data.mass} kg</p>
-                <p>Born: {data.birth_year}</p>
-            </section>
 
-            <section id="homeworld">
-                <h3>Homeworld: </h3>
+            <section id="characters">
+                <h3>Characters: </h3>
                 {data && data.homeworld ? <Homeworld hId={data.homeworld} onClick={handleHomeworldClick}/> : 'Homeworld data loading'}
             </section>
 
@@ -55,4 +49,4 @@ const Character = () => {
     );
 };
 
-export default Character;
+export default Planet;
