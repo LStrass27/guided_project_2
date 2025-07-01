@@ -10,13 +10,12 @@ const Character = () => {
     useEffect(() => {
         const fetchData = async () => {
         try {
-            const response = await fetch(import.meta.env.VITE_CHARACTERS_URL + '/' + String(id));
+            const response = await fetch(import.meta.env.VITE_CHARACTERS_URL + '/' + String(id));        
             if (!response.ok) {
                 throw new Error('Data could not be fetched!');
             }
             const json_response = await response.json();
             setData(json_response[0]);
-            console.log(data);
         } catch (error) {
             console.error('Error fetching data:', error);
         }

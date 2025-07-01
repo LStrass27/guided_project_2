@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import Index from "./components/Index";
 import Character from "./components/Character";
+import Planet from "./components/Planet";
 
 function App() {
   const [data, setData] = useState([]);
@@ -35,6 +36,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Index data={data} />} />
           <Route path="/character/:id" element={<Character />}  />
+          <Route path="/planet/:id" element={<Planet />}  />
         </Routes>
         {error && <div className="error">{error}</div>}
       </Router>
