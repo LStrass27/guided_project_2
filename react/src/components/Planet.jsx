@@ -5,20 +5,32 @@ import { useNavigate } from 'react-router-dom';
 const Planet = () => {
     const { id } = useParams(); 
     const [data, setData] = useState([null]);
+    const [charData, setCharData] = useState([null]);
 
     useEffect(() => {
         const fetchData = async () => {
-        try {
-            const response = await fetch(import.meta.env.VITE_PLANETS_URL + '/' + String(id));
-            if (!response.ok) {
-                throw new Error('Data could not be fetched!');
+            try {
+                const response = await fetch(import.meta.env.VITE_PLANETS_URL + '/' + String(id));
+                if (!response.ok) {
+                    throw new Error('Data could not be fetched!');
+                }
+                const json_response = await response.json();
+                setData(json_response[0]);
+                console.log(data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
             }
-            const json_response = await response.json();
-            setData(json_response[0]);
-            console.log(data);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
+
+            try {
+                const response = await fetch(import.meta.env.VITE_PLANETS_URL + '/' + String(id)) + "/characters";
+                if (!response.ok) {
+                    throw new Error('Characters could not be fetched!');
+                }
+                const json_response = await response.json();
+                setCharData(json_response);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
         };
 
         fetchData();
