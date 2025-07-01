@@ -6,7 +6,7 @@ import MapChars from './MapChars';
 
 const Film = ({ fId, onClick }) => {
     const [filmData, setFilmData] = useState(null);
-    const [charactersData, setCharactersData] = useState([]);
+    const [charactersData, setCharData] = useState([]);
     const [planetsData, setPlanetsData] = useState([]);
 
     useEffect(() => {
@@ -55,7 +55,7 @@ const Film = ({ fId, onClick }) => {
 
         
 
-        fetchData();
+        fetchFilmData();
         
     }, [fId]);
 
@@ -69,24 +69,26 @@ const Film = ({ fId, onClick }) => {
                 <div>{filmData.director}</div>
                 <div>{filmData.release_date}</div>
             </div>
-            <div id="charactersList">
-                <ul>
+            <section id="characters">
+                <h3>Characters: </h3>
                 {
-                    characters.map((ch)=> (
-                        <li><Name key={ch._id} data={ch} onClick={handleNameClick}/></li>
-                    ))
+                    charData.length > 0 ? (
+                        <MapChars data={charData} onClick={handleCharacterClick} />
+                    ) : (
+                        'Character data loading'
+                    )
                 }
-                </ul> 
-            </div>
-            <div id="planetsList">
-                <ul>
+            </section>
+            <section id="planets">
+                <h3>Planets: </h3>
                 {
-                    planets.map((p)=> (
-                        <li><Name key={p._id} data={p} onClick={handleNameClick}/></li>
-                    ))
+                    planetsData.length > 0 ? (
+                        <MapChars data={planetsData} onClick={handleCharacterClick} />
+                    ) : (
+                        'Planet data loading'
+                    )
                 }
-                </ul> 
-            </div>
+            </section>
         </section>   
     );
 };
