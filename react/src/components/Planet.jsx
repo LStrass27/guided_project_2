@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import MapChars from './MapChars';
+import MapFilms from './MapFilms';
 
 const Planet = () => {
     const { id } = useParams(); 
     const [data, setData] = useState(null); // Set initial state to null
     const [charData, setCharData] = useState([]); // Set initial state to an empty array
+    const [filmData, setFilmData] = useState([]); // Set initial state to an empty array
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,9 +32,19 @@ const Planet = () => {
                 }
                 const json_response = await response.json();
                 setCharData(json_response);
-                console.log("Character Data: ", json_response); // Log the fetched character data
             } catch (error) {
                 console.error('Error fetching character data:', error);
+            }
+
+            try {
+                const response = await fetch(import.meta.env.VITE_PLANETS_URL + '/' + String(id) + "/films");
+                if (!response.ok) {
+                    throw new Error('films could not be fetched!');
+                }
+                const json_response = await response.json();
+                setFilmData(json_response);
+            } catch (error) {
+                console.error('Error fetching film data:', error);
             }
         };
 
@@ -43,6 +56,12 @@ const Planet = () => {
     const handleCharacterClick = (charId) => {
         if (data && charData) {
             navigate(`/character/${charId}`);
+        }
+    };
+
+    const handleFilmClick = (filmId) => {
+        if (data && filmData) {
+            navigate(`/film/${filmId}`);
         }
     };
 
@@ -62,8 +81,14 @@ const Planet = () => {
             </section>
 
             <section id="films">
-                <h3>Films Appeared In: </h3>
-                <p>Films Appeared In: {data ? data.height : 'Loading...'} </p>
+            <h3>Films: </h3>
+            {
+                    filmData.length > 0 ? (
+                        <MapFilms data={filmData} onClick={handleFilmClick} />
+                    ) : (
+                        'Film data loading'
+                    )
+                }
             </section>
         </div>
     );
