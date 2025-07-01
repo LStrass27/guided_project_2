@@ -6,7 +6,8 @@ import Name from './Name';
 
 import MapChars from './MapChars';
 
-const Film = ({ fId, onClick }) => {
+const Film = ({onClick }) => {
+    const { id } = useParams();
     const [filmData, setFilmData] = useState(null);
     const [charData, setCharData] = useState([]);
     const [planetsData, setPlanetsData] = useState([]);
@@ -14,8 +15,8 @@ const Film = ({ fId, onClick }) => {
     useEffect(() => {
         const fetchFilmData = async () => {
             try {
-                const response = await fetch(import.meta.env.VITE_FILMS_URL + '/' + String(fId));
-                console.log(import.meta.env.VITE_FILMS_URL + '/' + String(fId));
+                const response = await fetch(import.meta.env.VITE_FILMS_URL + '/' + String(id));
+                console.log(import.meta.env.VITE_FILMS_URL + '/' + String(id));
                 if (!response.ok) {
                     throw new Error('Film data could not be fetched');
                 }
@@ -39,8 +40,8 @@ const Film = ({ fId, onClick }) => {
             }
 
             try {
-                const response = await fetch(import.meta.env.VITE_FILMS_URL + '/' + String(fId) + '/planets');
-                console.log(import.meta.env.VITE_FILMS_URL + '/' + String(fId) + '/planets');
+                const response = await fetch(import.meta.env.VITE_FILMS_URL + '/' + String(id) + '/planets');
+                console.log(import.meta.env.VITE_FILMS_URL + '/' + String(id) + '/planets');
                 if (!response.ok) {
                     throw new Error('planet data could not be fetched');
                 }
@@ -54,17 +55,24 @@ const Film = ({ fId, onClick }) => {
 
         fetchFilmData();
         
-    }, [fId]);
+    }, [id]);
+
+    const handleCharacterClick = (charId) => {
+        if (data && charData) {
+            navigate(`/character/${charId}`);
+        }
+    };
 
     return (
         <section id="film">     
             <div id="film-desc">
+                <h1>{filmData ? filmData.title : "Loading Title"} </h1>
                 <div onClick={() => onClick(filmData.id)} style={{ cursor: 'pointer' }}>
-                    {filmData.name ? filmData.name : "Loading film"}
+                    {filmData ? filmData.name : "Loading film"}
                 </div>
-                <div>{filmData.opening_crawl}</div>
-                <div>{filmData.director}</div>
-                <div>{filmData.release_date}</div>
+                <div>Opening Crawl: {filmData ? filmData.opening_crawl : "Loading film"}</div>
+                <div>Director: {filmData ? filmData.director : "Loading film"}</div>
+                <div>Release Date: {filmData ? filmData.release_date : "Loading film"}</div>
             </div>
             <section id="characters">
                 <h3>Characters: </h3>
@@ -80,7 +88,7 @@ const Film = ({ fId, onClick }) => {
                 <h3>Planets: </h3>
                 {
                     planetsData.length > 0 ? (
-                        <MapFilms data={planetsData} onClick={handleCharacterClick} />
+                        <MapFilms data={planetsData} onClick={handlePlanetClick} />
                     ) : (
                         'Planet data loading'
                     )
