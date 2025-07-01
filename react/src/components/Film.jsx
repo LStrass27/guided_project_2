@@ -57,8 +57,10 @@ const Film = ({onClick }) => {
         
     }, [id]);
 
+    const navigate = useNavigate();
+
     const handleCharacterClick = (charId) => {
-        if (data && charData) {
+        if (charId) {
             navigate(`/character/${charId}`);
         }
     };
