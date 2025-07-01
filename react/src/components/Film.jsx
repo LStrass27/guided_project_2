@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Name from './Name';
 
 import MapChars from './MapChars';
+import MapPlanets from './MapPlanets';
 
 const Film = ({onClick }) => {
     const { id } = useParams();
@@ -88,7 +89,7 @@ const Film = ({onClick }) => {
                 <h3>Planets: </h3>
                 {
                     planetsData.length > 0 ? (
-                        <MapFilms data={planetsData} onClick={handlePlanetClick} />
+                        <MapPlanets data={planetsData} onClick={handlePlanetClick} />
                     ) : (
                         'Planet data loading'
                     )
