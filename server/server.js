@@ -145,11 +145,18 @@ app.get('/api/films/:id/characters', async (req, res) => {
         const client = await MongoClient.connect(url);
         const db = client.db(dbName);
         const collection = db.collection(process.env.MONGO_DB_COLLECTION_FILMS_CHARACTERS);
-        const characters = await collection.find({film_id : filmId}).toArray();
+        const data = await collection.find({film_id : filmId}).toArray();
 
-        if (characters.length === 0) {
+
+        if (data.length === 0) {
             return res.status(404).send("characters not found for this film");
         }
+
+        const characterIds = data.map(fc => fc.character_id);
+        const charactersCollection = db.collection(process.env.MONGO_DB_COLLECTION_CHARACTERS);
+        const characters = await charactersCollection.find({ id: { $in: characterIds } }).toArray();
+
+
         res.json(characters);
     } catch (err) {
         console.error("Error:", err);
@@ -165,11 +172,16 @@ app.get('/api/films/:id/planets', async (req, res) => {
         const client = await MongoClient.connect(url);
         const db = client.db(dbName);
         const collection = db.collection(process.env.MONGO_DB_COLLECTION_FILMS_PLANETS);
-        const planets = await collection.find({film_id : filmId}).toArray();
+        const data = await collection.find({film_id : filmId}).toArray();
 
-        if (planets.length === 0) {
+        if (data.length === 0) {
             return res.status(404).send("planets not found for this film");
         }
+
+        const planetIds = data.map(p => p.planet_id);
+        const planetsCollection = db.collection(process.env.MONGO_DB_COLLECTION_PLANETS);
+        const planets = await planetsCollection.find({ id: { $in: planetIds } }).toArray();
+
         res.json(planets);
     } catch (err) {
         console.error("Error:", err);

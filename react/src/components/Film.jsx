@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Name from './components/Name';
+import MapChars from './MapChars';
 
 const Film = ({ fId, onClick }) => {
     const [filmData, setFilmData] = useState(null);
@@ -22,9 +23,19 @@ const Film = ({ fId, onClick }) => {
             } catch (error) {
                 console.error('Error fetching film data:', error);
             }
-        };
 
-        const fetchPlanetData = async () => {
+            try {
+                const response = await fetch(import.meta.env.VITE_PLANETS_URL + '/' + String(id) + "/characters");
+                if (!response.ok) {
+                    throw new Error('Characters could not be fetched!');
+                }
+                const json_response = await response.json();
+                setCharData(json_response);
+                console.log("Character Data: ", json_response); // Log the fetched character data
+            } catch (error) {
+                console.error('Error fetching character data:', error);
+            }
+
             try {
                 const response = await fetch(import.meta.env.VITE_FILMS_URL + '/' + String(fId) + '/planets');
                 console.log(import.meta.env.VITE_FILMS_URL + '/' + String(fId) + '/planets');
@@ -39,24 +50,13 @@ const Film = ({ fId, onClick }) => {
             }
         };
 
-        const fetchCharactersData = async () => {
-            try {
-                const response = await fetch(import.meta.env.VITE_FILMS_URL + '/' + String(fId) + '/characters');
-                console.log(import.meta.env.VITE_FILMS_URL + '/' + String(fId) + '/characters');
-                if (!response.ok) {
-                    throw new Error('Characters in this film could not be fetched');
-                }
-                const json_response = await response.json();
-                setCharactersData(json_response);
-                console.log(characters);
-            } catch (error) {
-                console.error('Error fetching characters data:', error);
-            }
-        };
+        
+            
 
-        fetchFilmData();
-        fetchPlanetData();
-        fetchCharactersData();
+        
+
+        fetchData();
+        
     }, [fId]);
 
     return (
