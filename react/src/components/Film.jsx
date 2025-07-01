@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Name from './Name';
 
 import MapChars from './MapChars';
+import MapPlanets from './MapPlanets';
 
 const Film = ({onClick }) => {
     const { id } = useParams();
@@ -16,13 +17,11 @@ const Film = ({onClick }) => {
         const fetchFilmData = async () => {
             try {
                 const response = await fetch(import.meta.env.VITE_FILMS_URL + '/' + String(id));
-                console.log(import.meta.env.VITE_FILMS_URL + '/' + String(id));
                 if (!response.ok) {
                     throw new Error('Film data could not be fetched');
                 }
                 const json_response = await response.json();
                 setFilmData(json_response[0]);
-                console.log(filmData);
             } catch (error) {
                 console.error('Error fetching film data:', error);
             }
@@ -34,20 +33,19 @@ const Film = ({onClick }) => {
                 }
                 const json_response = await response.json();
                 setCharData(json_response);
-                console.log("Character Data: ", json_response); // Log the fetched character data
             } catch (error) {
                 console.error('Error fetching character data:', error);
             }
 
             try {
                 const response = await fetch(import.meta.env.VITE_FILMS_URL + '/' + String(id) + '/planets');
+                console.log(response)
                 console.log(import.meta.env.VITE_FILMS_URL + '/' + String(id) + '/planets');
                 if (!response.ok) {
                     throw new Error('planet data could not be fetched');
                 }
                 const json_response = await response.json();
-                setPlanetsData(json_response[0]);
-                console.log(planetsData);
+                setPlanetsData(json_response);
             } catch (error) {
                 console.error('Error fetching film data:', error);
             }
@@ -64,6 +62,13 @@ const Film = ({onClick }) => {
             navigate(`/character/${charId}`);
         }
     };
+
+    const handlePlanetClick = (pId) => {
+        if (pId) {
+            navigate(`/planet/${pId}`);
+        }
+    };
+    console.log("PLAN", planetsData)
 
     return (
         <section id="film">     
@@ -90,7 +95,7 @@ const Film = ({onClick }) => {
                 <h3>Planets: </h3>
                 {
                     planetsData.length > 0 ? (
-                        <MapFilms data={planetsData} onClick={handlePlanetClick} />
+                        <MapPlanets data={planetsData} onClick={handlePlanetClick} />
                     ) : (
                         'Planet data loading'
                     )
