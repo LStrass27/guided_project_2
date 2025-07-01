@@ -60,7 +60,7 @@ const Character = () => {
 
     return (
         <div>
-            <h1>{data.name}</h1>
+            <h1>{data ? data.name : "No Character found"}</h1>
             <section id="generalInfo">
                 <p>Height: {data.height} cm</p>
                 <p>Mass: {data.mass} kg</p>

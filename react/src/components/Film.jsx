@@ -75,7 +75,7 @@ const Film = ({onClick }) => {
             <div id="film-desc">
                 <h1>{filmData ? filmData.title : "Loading Title"} </h1>
                 <div onClick={() => onClick(filmData.id)} style={{ cursor: 'pointer' }}>
-                    {filmData ? filmData.name : "Loading film"}
+                    {filmData ? filmData.name : "No film exists"}
                 </div>
                 <div>Opening Crawl: {filmData ? filmData.opening_crawl : "Loading film"}</div>
                 <div>Director: {filmData ? filmData.director : "Loading film"}</div>
@@ -87,7 +87,7 @@ const Film = ({onClick }) => {
                     charData.length > 0 ? (
                         <MapChars data={charData} onClick={handleCharacterClick} />
                     ) : (
-                        'Character data loading'
+                        'No Characters found'
                     )
                 }
             </section>
@@ -97,7 +97,7 @@ const Film = ({onClick }) => {
                     planetsData.length > 0 ? (
                         <MapPlanets data={planetsData} onClick={handlePlanetClick} />
                     ) : (
-                        'Planet data loading'
+                        'No Planets found'
                     )
                 }
             </section>

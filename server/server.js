@@ -227,6 +227,7 @@ app.get('/api/planets/:id/characters', async (req, res) => {
         if (characters.length === 0) {
             return res.status(404).send("characters not found for this planet");
         }
+
         res.json(characters);
     } catch (err) {
         console.error("Error:", err);
@@ -243,11 +244,16 @@ app.get('/api/planets/:id/films', async (req, res) => {
         const client = await MongoClient.connect(url);
         const db = client.db(dbName);
         const collection = db.collection(process.env.MONGO_DB_COLLECTION_FILMS_PLANETS);
-        const films = await collection.find({planet_id : planetId}).toArray();
+        const data = await collection.find({planet_id : planetId}).toArray();
 
-        if (films.length === 0) {
+        if (data.length === 0) {
             return res.status(404).send("films not found for this planet");
         }
+
+        const filmIds = data.map(f => f.film_id);
+        const filmsCollection = db.collection(process.env.MONGO_DB_COLLECTION_FILMS);
+        const films = await filmsCollection.find({ id: { $in: filmIds } }).toArray();
+
         res.json(films);
     } catch (err) {
         console.error("Error:", err);

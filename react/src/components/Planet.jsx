@@ -69,7 +69,7 @@ const Planet = () => {
 
     return (
         <div>
-            <h1>{data ? data.name : 'Loading...'}</h1>
+            <h1>{data ? data.name : 'No planet found'}</h1>
 
             <section id="characters">
                 <h3>Characters: </h3>
@@ -77,18 +77,19 @@ const Planet = () => {
                     charData.length > 0 ? (
                         <MapChars data={charData} onClick={handleCharacterClick} />
                     ) : (
-                        'Character data loading'
+                        'No Characters found'
                     )
                 }
             </section>
 
             <section id="films">
+                
             <h3>Films: </h3>
             {
                     filmData.length > 0 ? (
                         <MapFilms data={filmData} onClick={handleFilmClick} />
                     ) : (
-                        'Film data loading'
+                        'No films found'
                     )
                 }
             </section>
