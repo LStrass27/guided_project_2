@@ -25,6 +25,14 @@ const Character = () => {
         fetchData();
     }, [id]);
 
+    const navigate = useNavigate();
+
+    const handleHomeworldClick = () => {
+        if (data && data.homeworld) {
+            navigate(`planet/${data.homeworld}`);
+        }
+    };
+
     return (
         <div>
             <h1>{data.name}</h1>
@@ -35,10 +43,12 @@ const Character = () => {
             </section>
 
             <section id="homeworld">
-                <p>Homeworld: <Homeworld hId={data.homeworld}/> </p>
+                <h3>Homeworld: </h3>
+                {data && data.homeworld ? <Homeworld hId={data.homeworld} onClick={handleHomeworldClick}/> : 'Homeworld data loading'}
             </section>
 
             <section id="films">
+                <h3>Films Appeared In: </h3>
                 <p>Films Appeared In: {data.height} </p>
             </section>
         </div>

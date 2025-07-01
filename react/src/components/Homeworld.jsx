@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-const Homeworld = (props) => {
-    const hId = props.hId; 
+const Homeworld = ({ hId, onClick }) => {
     const [data, setData] = useState(null);
 
     useEffect(() => {
@@ -26,8 +25,8 @@ const Homeworld = (props) => {
     }, [hId]);
 
     return (
-        <div >
-            {data.name}
+        <div onClick={() => onClick(data.id)} style={{ cursor: 'pointer' }}>
+            {data.name ? data.name : "Loading homeworld"}
         </div>
     );
 };
