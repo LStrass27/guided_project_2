@@ -2,10 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Homeworld from "./homeworld";
+import MapChars from './MapChars';
+
 
 const Character = () => {
     const { id } = useParams(); 
     const [data, setData] = useState([null]);
+    const [filmsData, setFilmsData] = useState([]);
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -19,6 +23,20 @@ const Character = () => {
         } catch (error) {
             console.error('Error fetching data:', error);
         }
+
+        try {
+            const response = await fetch(import.meta.env.VITE_CHARACTERS_URL + '/' + String(id) + "/films");
+            if (!response.ok) {
+                throw new Error('films could not be fetched!');
+            }
+            const json_response = await response.json();
+            setFilmsData(json_response);
+            console.log("Film Data: ", json_response); // Log the fetched character data
+        } catch (error) {
+            console.error('Error fetching film data:', error);
+        }
+
+
         };
 
         fetchData();
@@ -29,6 +47,12 @@ const Character = () => {
     const handleHomeworldClick = () => {
         if (data && data.homeworld) {
             navigate(`/planet/${data.homeworld}`);
+        }
+    };
+
+    const handleFilmClick = () => {
+        if (data && data.films) {
+            navigate(`/films/${data.film}`);
         }
     };
 
@@ -47,8 +71,14 @@ const Character = () => {
             </section>
 
             <section id="films">
-                <h3>Films Appeared In: </h3>
-                <p>Films Appeared In: {data.height} </p>
+                <h3>Films appeared: </h3>
+                {
+                    filmsData.length > 0 ? (
+                        <MapChars data={filmsData} onClick={handlePlanetClick} />
+                    ) : (
+                        'Film data loading'
+                    )
+                }
             </section>
         </div>
     );
