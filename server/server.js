@@ -15,7 +15,7 @@ const PORT = 3000;
 
 // Middleware to parse JSON bodies
 app.use(express.json());
-
+app.use(express.static('./public'));
 // GET Route Handler to get planets
 app.get('/api/planets', async (req, res) => {
     try {
