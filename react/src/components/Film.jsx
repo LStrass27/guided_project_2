@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+
+import Name from './Name';
+
 import MapChars from './MapChars';
 
 const Film = ({ fId, onClick }) => {
     const [filmData, setFilmData] = useState(null);
-    const [charactersData, setCharData] = useState([]);
+    const [charData, setCharData] = useState([]);
     const [planetsData, setPlanetsData] = useState([]);
 
     useEffect(() => {
@@ -47,12 +50,7 @@ const Film = ({ fId, onClick }) => {
             } catch (error) {
                 console.error('Error fetching film data:', error);
             }
-        };
-
-        
-            
-
-        
+        };        
 
         fetchFilmData();
         
@@ -82,7 +80,7 @@ const Film = ({ fId, onClick }) => {
                 <h3>Planets: </h3>
                 {
                     planetsData.length > 0 ? (
-                        <MapChars data={planetsData} onClick={handleCharacterClick} />
+                        <MapFilms data={planetsData} onClick={handleCharacterClick} />
                     ) : (
                         'Planet data loading'
                     )

@@ -3,14 +3,12 @@ import Name from './Name';
 
 const MapChars = ({ data, onClick }) => {
     // Log the entire data array to the console
-    console.log("Data: ", data);
 
     return (
         <div>
             {data ? (
                 data.map((character) => {
                     // Log each character object to the console
-                    console.log(character);
                     return (
                         <div key={character.id} onClick={() => onClick(character.id)} style={{ cursor: 'pointer' }}>
                             {character.name}
