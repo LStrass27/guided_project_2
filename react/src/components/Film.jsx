@@ -17,38 +17,35 @@ const Film = ({onClick }) => {
         const fetchFilmData = async () => {
             try {
                 const response = await fetch(import.meta.env.VITE_FILMS_URL + '/' + String(id));
-                console.log(import.meta.env.VITE_FILMS_URL + '/' + String(id));
                 if (!response.ok) {
                     throw new Error('Film data could not be fetched');
                 }
                 const json_response = await response.json();
                 setFilmData(json_response[0]);
-                console.log(filmData);
             } catch (error) {
                 console.error('Error fetching film data:', error);
             }
 
             try {
-                const response = await fetch(import.meta.env.VITE_PLANETS_URL + '/' + String(id) + "/characters");
+                const response = await fetch(import.meta.env.VITE_FILMS_URL + '/' + String(id) + "/characters");
                 if (!response.ok) {
                     throw new Error('Characters could not be fetched!');
                 }
                 const json_response = await response.json();
                 setCharData(json_response);
-                console.log("Character Data: ", json_response); // Log the fetched character data
             } catch (error) {
                 console.error('Error fetching character data:', error);
             }
 
             try {
                 const response = await fetch(import.meta.env.VITE_FILMS_URL + '/' + String(id) + '/planets');
+                console.log(response)
                 console.log(import.meta.env.VITE_FILMS_URL + '/' + String(id) + '/planets');
                 if (!response.ok) {
                     throw new Error('planet data could not be fetched');
                 }
                 const json_response = await response.json();
-                setPlanetsData(json_response[0]);
-                console.log(planetsData);
+                setPlanetsData(json_response);
             } catch (error) {
                 console.error('Error fetching film data:', error);
             }
@@ -65,6 +62,13 @@ const Film = ({onClick }) => {
             navigate(`/character/${charId}`);
         }
     };
+
+    const handlePlanetClick = (pId) => {
+        if (pId) {
+            navigate(`/planet/${pId}`);
+        }
+    };
+    console.log("PLAN", planetsData)
 
     return (
         <section id="film">     

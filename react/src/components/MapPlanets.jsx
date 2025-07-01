@@ -3,6 +3,7 @@ import Name from './Name';
 
 const MapPlanets = ({ data, onClick }) => {
     // Log the entire data array to the console
+    console.log("Planet Data: ", data)
 
     return (
         <div>
