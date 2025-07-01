@@ -50,9 +50,9 @@ const Character = () => {
         }
     };
 
-    const handleFilmClick = () => {
-        if (data && data.films) {
-            navigate(`/film/${data.id}`);
+    const handleFilmClick = (filmId) => {
+        if (filmId) {
+            navigate(`/film/${filmId}`);
         }
     };
 
