@@ -6,6 +6,7 @@ import {
   Link
 } from "react-router-dom";
 import Index from "./components/Index";
+import Character from "./components/Character";
 
 function App() {
   const [data, setData] = useState([]);
@@ -33,7 +34,7 @@ function App() {
       <Router>
         <Routes>
           <Route exact path="/" element={<Index data={data} />} />
-          <Route path="/character/:id"  />
+          <Route path="/character/:id" element={<Character />}  />
         </Routes>
         {error && <div className="error">{error}</div>}
       </Router>

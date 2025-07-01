@@ -10,7 +10,7 @@ const Index = (props) => {
     const navigate = useNavigate();
 
     const handleNameClick = (id) => {
-        navigate(`/character/${id}`);
+        navigate(`character/${id}`);
     };
 
     return (

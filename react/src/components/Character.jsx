@@ -1,44 +1,46 @@
-import Navigator from "./Navigator";
-import Sock from "./Sock";
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Homeworld from "./homeworld";
 
-const Character = (props) => {
-    const characterId = props.id
-    const [data, setData] = useState([]);
+const Character = () => {
+    const { id } = useParams(); 
+    const [data, setData] = useState([null]);
 
     useEffect(() => {
         const fetchData = async () => {
         try {
-            const response = await fetch(import.meta.env.VITE_CHARACTERS_URL + String(characterId));
+            const response = await fetch(import.meta.env.VITE_CHARACTERS_URL + '/' + String(id));
             if (!response.ok) {
-            throw new Error('Data could not be fetched!');
+                throw new Error('Data could not be fetched!');
             }
             const json_response = await response.json();
-            setData(json_response);
+            setData(json_response[0]);
+            console.log(data);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
         };
 
         fetchData();
-    }, [characterId]);
+    }, [id]);
 
     return (
         <div>
-            <head>
-                <title>A Star Wars Character</title>
-            </head>
+            <h1>{data.name}</h1>
+            <section id="generalInfo">
+                <p>Height: {data.height} cm</p>
+                <p>Mass: {data.mass} kg</p>
+                <p>Born: {data.birth_year}</p>
+            </section>
 
-            <body>
-                <main>
-                    <h1 {data[0].name}></h1>
-                    <section id="generalInfo">
-                    <p>Height: {data[0].height} cm</p>
-                    <p>Mass: {data[0].mass} kg</p>
-                    <p>Born: {data[0].birth_year} </p>
-                    </section>
+            <section id="homeworld">
+                <p>Homeworld: <Homeworld hId={data.homeworld}/> </p>
+            </section>
 
-                </main>
-            </body>
+            <section id="films">
+                <p>Films Appeared In: {data.height} </p>
+            </section>
         </div>
     );
 };
